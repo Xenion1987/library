@@ -11,6 +11,9 @@
 #############################################
 # Resolving dependencies
 #############################################
+local FUNC_DEPENDENCIES
+local LIBRARY_PATH
+local DEPENDENCY
 FUNC_DEPENDENCIES+=(debug_single_function)
 FUNC_DEPENDENCIES+=(ccolors chelp cecho)
 

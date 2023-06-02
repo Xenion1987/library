@@ -20,17 +20,23 @@ function cbanner() {
   #############################################
   # Resolving dependencies
   #############################################
+  local FUNC_DEPENDENCIES
+  local LIBRARY_PATH
+  local DEPENDENCY
   FUNC_DEPENDENCIES+=()
   if [[ ${#FUNC_DEPENDENCIES[@]} -gt 0 ]]; then
-    LIBRARY_PATH=$(
-      cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit
-      pwd -P
-    )
+    if [[ -z "${LIBRARY_PATH}" ]]; then
+      LIBRARY_PATH=$(
+        cd -- "$(dirname "$0")" >/dev/null 2>&1 || exit
+        pwd -P
+      )
+    fi
     # shellcheck source=/dev/null
     for DEPENDENCY in "${FUNC_DEPENDENCIES[@]}"; do
       if [[ -f "${LIBRARY_PATH}/${DEPENDENCY}.sh" ]]; then
         source "${LIBRARY_PATH}/${DEPENDENCY}.sh"
       else
+        echo -n "${FUNCNAME[0]} :: "
         echo "Could not load dependency '${DEPENDENCY}'"
       fi
     done
